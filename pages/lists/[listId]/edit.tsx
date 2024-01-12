@@ -5,6 +5,7 @@ import { ComponentProps, useState } from "react";
 import { FaUserPlus } from "react-icons/fa6";
 import Link from "next/link";
 import { MdOutlineArrowBackIos } from "react-icons/md";
+import { useRouter } from "next/router";
 import { fetchApiData } from "helpers/fetchApiData";
 import HubContributorsPageLayout from "layouts/hub-contributors";
 import Text from "components/atoms/Typography/text";
@@ -207,6 +208,8 @@ export default function EditListPage({ list, initialContributors }: EditListPage
     );
   };
 
+  const router = useRouter();
+
   return (
     <HubContributorsPageLayout>
       <div className="grid place-content-center info-container container w-full px-4 mt-10 mb-16 gap-8">
@@ -226,6 +229,8 @@ export default function EditListPage({ list, initialContributors }: EditListPage
 
             if (!error) {
               toast({ description: "List updated successfully!", variant: "success" });
+              const listId = router.query.listId;
+              router.push(`/lists/${listId}/overview`);
             } else {
               toast({ description: "Error updating list. Please try again", variant: "danger" });
             }
